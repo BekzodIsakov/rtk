@@ -1,4 +1,4 @@
-const { createSlice } = require("@reduxjs/toolkit");
+import { createSlice } from "@reduxjs/toolkit";
 
 const initPosts = [
   {
@@ -29,13 +29,16 @@ const initPosts = [
 
 const postsSlice = createSlice({
   name: "posts",
-  initialState: initPosts,
+  initialState: { posts: initPosts },
   reducers: {
     addPost: (state, action) => {
-      state.push(action.payload);
+      state.posts.push(action.payload);
+    },
+    deletePost: (state, action) => {
+      state.posts = state.posts.filter((post) => post.id !== action.payload);
     },
   },
 });
 
-export const { addPost } = postsSlice.actions;
+export const { addPost, deletePost } = postsSlice.actions;
 export default postsSlice.reducer;

@@ -10,11 +10,14 @@ import { Routes, useNavigate, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { deletePost } from "./store/postsSlice";
 
 function App() {
-  const posts = useSelector((store) => store.posts);
+  const posts = useSelector((store) => store.postsReducer.posts);
   console.log({ posts });
+
+  const dispatch = useDispatch();
 
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -45,8 +48,9 @@ function App() {
   };
 
   const handleDelete = (id) => {
-    const postsList = posts.filter((post) => post.id !== id);
-    setPosts(postsList);
+    // const postsList = posts.filter((post) => post.id !== id);
+    // setPosts(postsList);
+    dispatch(deletePost(id));
     navigate("/");
   };
 
